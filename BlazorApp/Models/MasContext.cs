@@ -47,10 +47,10 @@ public partial class MasContext : DbContext
             entity.Property(e => e.ServiceIdService).HasColumnName("service_id_service");
             entity.Property(e => e.Start)
                 .HasColumnType("timestamp without time zone")
-                .HasColumnName("start");
+                .HasColumnName("start_appointment");
             entity.Property(e => e.End)
                 .HasColumnType("timestamp without time zone")
-                .HasColumnName("end");
+                .HasColumnName("end_appointment");
             entity.Property(e => e.IsCancelled).HasColumnName("is_cancelled");
 
             entity.HasOne(d => d.PersonPeselNavigation).WithMany(p => p.Appointments)

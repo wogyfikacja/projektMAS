@@ -8,11 +8,11 @@ using Microsoft.Extensions.Logging;
 
 namespace BlazorApp.Pages
 {
-    public class AddAppointmentPage : PageModel
+    public class AddAppointment : PageModel
     {
-        private readonly ILogger<AddAppointmentPage> _logger;
+        private readonly ILogger<AddAppointment> _logger;
 
-        public AddAppointmentPage(ILogger<AddAppointmentPage> logger)
+        public AddAppointment(ILogger<AddAppointment> logger)
         {
             _logger = logger;
         }
