@@ -5,6 +5,10 @@ namespace BlazorApp.Models;
 
 public partial class Person
 {
+    public override string ToString()
+    {
+        return Name + " " + Surname;
+    }
     public string Pesel { get; set; } = null!;
 
     public string Name { get; set; } = null!;

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorApp.Models;
-
+/// <summary>
+/// A context for the db. It was generated using DB first approach
+/// </summary>
 public partial class MasContext : DbContext
 {
     public MasContext()

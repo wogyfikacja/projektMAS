@@ -20,12 +20,8 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
+[/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Pages/AddAppointment.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRkQXBwb2ludG1lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Pages/Index.razor]
@@ -47,10 +43,6 @@ build_metadata.AdditionalFiles.CssScope = b-3ij3p7wwc4
 [/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-wk4bcz64v1
-
-[/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Pages/AddAppointment.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQWRkQXBwb2ludG1lbnQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
 
 [/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s

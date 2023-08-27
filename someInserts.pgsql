@@ -2,6 +2,8 @@ INSERT INTO person (pesel,name,surname,patient,worker,doctor_spec,nurse_spec,is_
 VALUES (00000000000,'Emil','Bakula',TRUE,FALSE,'NONE','NONE',FALSE);
 INSERT INTO person (pesel,name,surname,patient,worker,doctor_spec,nurse_spec,is_admin)
 VALUES (00000000001,'Em','Ula',FALSE,TRUE,'PSYCHIATRY','NONE',FALSE);
+INSERT INTO person (pesel,name,surname,patient,worker,doctor_spec,nurse_spec,is_admin)
+VALUES (00000000002,'Emi','Ulat',FALSE,TRUE,'PSYCHIATRY','NONE',FALSE);
 
 INSERT INTO service(id_service,price,room,doctor_pesel)
 VALUES (0,100,1,00000000001);

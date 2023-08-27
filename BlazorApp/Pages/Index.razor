@@ -1,36 +1,50 @@
 ﻿@page "/"
 @using BlazorApp.Models
 @using BlazorApp.Data
-@data Appointment Appointment
+@inject DialogService DialogService
 <div class="rz-p-sm-12 rz-text-align-center">
-    <RadzenDropDown @bind-Value=@value Data=@doctorSurnames Style="width: 100%; max-width: 400px;" />
+    <RadzenDropDown @bind-Value=@doctor Data=@doctors Change=@changeDropDown Style="width: 100%; max-width: 400px;" />
 </div>
-@code {
-    IEnumerable<string> doctorSurnames;
-    string value;
-    protected override async Task OnInitializedAsync()
-    {
-        AppointmentService appointmentService = new AppointmentService(new MasContext());
-        await base.OnInitializedAsync();
-        doctorSurnames = appointmentService.getDoctorSurnames();
-    }
-}
-<RadzenScheduler @ref=@scheduler SlotRender=@OnSlotRender LoadData="@OnLoadData" Data="@data" TItem="Appointment" StartProperty="Start" EndProperty="End" TextProperty="PersonPesel">
+<RadzenScheduler @ref=@scheduler LoadData="@OnLoadData" Data="@data" TItem="Appointment" StartProperty="Start" EndProperty="End" TextProperty="PersonPesel"
+SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
   <RadzenMonthView />
   <RadzenWeekView />
 </RadzenScheduler>
+<RadzenDialog/>
 @code {
-  IQueryable<Appointment> data;
-  RadzenScheduler<Appointment> scheduler;
-
-  async Task OnLoadData(SchedulerLoadDataEventArgs args)
-  {
-    // Get the appointments for between the Start and End 
-    AppointmentService appointmentService = new AppointmentService(new MasContext());
-    data = appointmentService.Index();
-    value = doctorSurnames.ElementAt(0);
-  }
-  void OnSlotRender(SchedulerSlotRenderEventArgs args)
+    IQueryable<Person> doctors;
+    Person doctor;
+    IQueryable<Appointment> data;
+    RadzenScheduler<Appointment> scheduler;
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+    /// <summary>
+    /// This function does data fetching from db
+    /// </summary>
+    /// <param name="args">data from loading of scheduler</param>
+    /// <returns>Task</returns>
+    async Task OnLoadData(SchedulerLoadDataEventArgs args)
+    {
+        // Get the appointments for between the Start and End 
+        AppointmentService appointmentService = new AppointmentService(new MasContext());
+        await base.OnInitializedAsync();
+        doctors = appointmentService.GetDoctors();
+        data = appointmentService.IndexForADoctor(doctor);
+    }
+    /// <summary>
+    /// This function does data fetching at the start of schedule
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        AppointmentService appointmentService = new AppointmentService(new MasContext());
+        doctors = appointmentService.GetDoctors();
+        doctor = doctors.First();
+        data = appointmentService.IndexForADoctor(doctor); 
+    }
+    /// <summary>
+    /// this function creates different hue to working hours
+    /// </summary>
+    /// <param name="args">data from rendering of slots</param>
+    void OnSlotRender(SchedulerSlotRenderEventArgs args)
     {
         // Highlight today in month view
         if (args.View.Text == "Month" && args.Start.Date == DateTime.Today)
@@ -43,6 +57,20 @@
         {
             args.Attributes["style"] = "background: rgba(255,220,40,.2);";
         }
+    }
+    /// <summary>
+    /// This function creates a new window used in creation of a new appointment; opens AddAppointment.razor
+    /// </summary>
+    /// <param name="args">arguments from chosen slot</param>
+    /// <returns>Task</returns>
+    async Task OnSlotSelect(SchedulerSlotSelectEventArgs args)
+    {
+        Appointment data = await DialogService.OpenAsync<AddAppointment>("Add Appointment",
+                new Dictionary<string, object> { { "Start", args.Start }, { "End", args.End } });
+        await scheduler.Reload();
+    }
+    async Task changeDropDown(){
+        await scheduler.Reload();
     }
 }
 

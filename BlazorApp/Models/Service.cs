@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TextTemplating;
 
 namespace BlazorApp.Models;
 
 public partial class Service
 {
+    public override string ToString()
+    {
+        return IdService + " " + Price;
+    }
     public int IdService { get; set; }
 
     public int Price { get; set; }
