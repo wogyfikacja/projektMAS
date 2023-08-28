@@ -31,10 +31,7 @@ namespace BlazorApp.Data
         /// <param name="doctor">Person</param>
         /// <returns>IQueryable<Appointment></returns>
         public IQueryable<Appointment> IndexForADoctor(Person doctor){
-             return from app in _context.Appointments
-                    join serv in _context.Services on app.ServiceIdService equals serv.IdService
-                    where serv.DoctorPesel == doctor.Pesel
-                    select app;
+             return _context.Appointments.Where(app=>app.ServiceIdServiceNavigation.DoctorPesel == doctor.Pesel);
         }
         /// <summary>
         /// Returns a list of all doctors
@@ -68,9 +65,7 @@ namespace BlazorApp.Data
         /// </summary>
         /// <returns>IQueryable<Person></returns>
         public IQueryable<Person> GetClients(){
-            return from client in _context.People
-                    where client.Patient == true
-                    select client;
+            return _context.People.Where(person=>person.Patient == true);
         }
 
         /// <summary>
@@ -81,7 +76,9 @@ namespace BlazorApp.Data
         {
             return _context.Services;
         }
-        
+        public IQueryable<Service> GetServicesByDocPESEL(string pesel){
+            return this.GetServices().Where(service=>service.DoctorPesel == pesel);
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
