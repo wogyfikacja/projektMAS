@@ -33,7 +33,7 @@ public partial class MasContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=127.0.1.1; Database=mas; Username=masprojectuser; Password=6o5vwbaP9t6v?");
+        => optionsBuilder.UseNpgsql("Host=2a01:110f:4521:c800:d313:d559:527a:2ed5; Database=mas; Username=masprojectuser; Password=6o5vwbaP9t6v?");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
