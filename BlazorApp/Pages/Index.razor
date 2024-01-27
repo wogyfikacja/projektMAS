@@ -12,9 +12,9 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
 </RadzenScheduler>
 <RadzenDialog/>
 @code {
-    IQueryable<Person> doctors;
+    List<Person> doctors;
     Person doctor;
-    IQueryable<Appointment> data;
+    List<Appointment> data;
     RadzenScheduler<Appointment> scheduler;
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
     /// <summary>
@@ -27,8 +27,10 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
         // Get the appointments for between the Start and End 
         AppointmentService appointmentService = new AppointmentService(new MasContext());
         await base.OnInitializedAsync();
-        doctors = appointmentService.GetDoctors();
-        data = appointmentService.IndexForADoctor(doctor);
+        doctors = appointmentService.GetDoctors().ToList();
+        data = appointmentService.IndexForADoctor(doctor).ToList();
+
+        StateHasChanged();
     }
     /// <summary>
     /// This function does data fetching at the start of schedule
@@ -36,9 +38,9 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
     protected override void OnInitialized()
     {
         AppointmentService appointmentService = new AppointmentService(new MasContext());
-        doctors = appointmentService.GetDoctors();
+        doctors = appointmentService.GetDoctors().ToList();
         doctor = doctors.First();
-        data = appointmentService.IndexForADoctor(doctor); 
+        data = appointmentService.IndexForADoctor(doctor).ToList(); 
     }
     /// <summary>
     /// this function creates different hue to working hours
