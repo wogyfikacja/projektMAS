@@ -58,9 +58,9 @@
     public int IdService { get; set; }
     Appointment data = new Appointment();
 
-    IQueryable<Service> serviceList;
+    List<Service> serviceList;
     Service placeholderService;
-    IQueryable<Person> peopleList;
+    List<Person> peopleList;
     Person placeholderPerson;
     /// <summary>
     /// Parameters are given to the dialog window
@@ -92,8 +92,8 @@
     { 
         AppointmentService appointmentService = new AppointmentService(new MasContext());
         await base.OnInitializedAsync();
-        serviceList = appointmentService.GetServicesByDocPESEL(DoctorPESEL);
-        peopleList = appointmentService.GetClients();
+        serviceList = appointmentService.GetServicesByDocPESEL(DoctorPESEL).ToList();
+        peopleList = appointmentService.GetClients().ToList();
         placeholderService = serviceList.First();
         placeholderPerson = peopleList.First();
     }
