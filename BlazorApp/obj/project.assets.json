@@ -4922,11 +4922,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/BlazorApp.csproj",
+      "projectUniqueName": "/home/wogyfikacja/Documents/projektMAS/BlazorApp/BlazorApp.csproj",
       "projectName": "BlazorApp",
-      "projectPath": "/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/BlazorApp.csproj",
+      "projectPath": "/home/wogyfikacja/Documents/projektMAS/BlazorApp/BlazorApp.csproj",
       "packagesPath": "/home/wogyfikacja/.nuget/packages/",
-      "outputPath": "/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/obj/",
+      "outputPath": "/home/wogyfikacja/Documents/projektMAS/BlazorApp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/wogyfikacja/.nuget/NuGet/NuGet.Config"
@@ -5003,7 +5003,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/wogyfikacja/.dotnet/sdk/7.0.400/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.115/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZwYzOxl1/QudIM0kHvcO1/7WjqEywcejVoznEQDG5aQmRMBC6dfaRKj+ZsZpdMcJGVam1TuUvq26bJPUjxkXfQ==",
+  "dgSpecHash": "an/PkaikR0btrk0eQlrwc1IvmbePVCMGeMY8oFeQgc+S0UML2IAIEj0sbipZZJFfUY8ud2bBjSKwyIYCOoFo5g==",
   "success": true,
-  "projectFilePath": "/home/wogyfikacja/Dokumenty/projektMAS/BlazorApp/BlazorApp.csproj",
+  "projectFilePath": "/home/wogyfikacja/Documents/projektMAS/BlazorApp/BlazorApp.csproj",
   "expectedPackageFiles": [
     "/home/wogyfikacja/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/home/wogyfikacja/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",

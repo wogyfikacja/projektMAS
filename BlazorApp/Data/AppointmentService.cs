@@ -23,7 +23,9 @@ namespace BlazorApp.Data
         /// <returns>IQueryable<Appointment></returns>
         public IQueryable<Appointment> Index()
         {
-            return _context.Appointments;
+            return _context.Appointments
+                    .Include(a => a.ServiceIdServiceNavigation)
+                    .Include(a => a.PersonPeselNavigation);
         }
         /// <summary>
         /// Returns appointments of a chosen doctor
@@ -31,7 +33,10 @@ namespace BlazorApp.Data
         /// <param name="doctor">Person</param>
         /// <returns>IQueryable<Appointment></returns>
         public IQueryable<Appointment> IndexForADoctor(Person doctor){
-             return _context.Appointments.Where(app=>app.ServiceIdServiceNavigation.DoctorPesel == doctor.Pesel);
+             return _context.Appointments
+                    .Include(a => a.ServiceIdServiceNavigation)
+                    .Include(a => a.PersonPeselNavigation)
+                    .Where(app=>app.ServiceIdServiceNavigation.DoctorPesel == doctor.Pesel);
         }
         /// <summary>
         /// Returns a list of all doctors
@@ -39,7 +44,9 @@ namespace BlazorApp.Data
         /// <returns>IQueryable<Person></returns>
         public IQueryable<Person> GetDoctors()
         {
-            return _context.People.Where(doc => doc.DoctorSpec!="NONE");
+            return _context.People
+                    .Include(p => p.Appointments)
+                    .Where(doc => doc.DoctorSpec!="NONE");
         }
         /// <summary>
         /// Returns a list of all doctors surnames
