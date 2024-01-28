@@ -12,6 +12,7 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
 </RadzenScheduler>
 <RadzenDialog/>
 @code {
+    AppointmentService appointmentService = new AppointmentService(new MasContext());
     List<Person> doctors;
     Person doctor;
     List<Appointment> data;
@@ -25,11 +26,21 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
     async Task OnLoadData(SchedulerLoadDataEventArgs args)
     {
         // Get the appointments for between the Start and End 
-        AppointmentService appointmentService = new AppointmentService(new MasContext());
         await base.OnInitializedAsync();
         doctors = appointmentService.GetDoctors().ToList();
-        data = appointmentService.IndexForADoctor(doctor).ToList();
-
+        data = new List<Appointment>();
+        if (doctor != null && doctor.Services.Any())
+        {
+            foreach (var service in doctor.Services)
+            {
+                data.AddRange(service.Appointments);
+            }
+        }
+        Console.WriteLine(data.Count);
+        StateHasChanged();
+    }
+    private void Reload()
+    {
         StateHasChanged();
     }
     /// <summary>
@@ -37,10 +48,15 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
     /// </summary>
     protected override void OnInitialized()
     {
-        AppointmentService appointmentService = new AppointmentService(new MasContext());
         doctors = appointmentService.GetDoctors().ToList();
         doctor = doctors.First();
-        data = appointmentService.IndexForADoctor(doctor).ToList(); 
+        data = new List<Appointment>();
+        foreach (var service in doctor.Services)
+        {
+            data.AddRange(service.Appointments);
+        }
+        Console.WriteLine(data.Count);
+        appointmentService.OnAppointmentAdded += Reload;
     }
     /// <summary>
     /// this function creates different hue to working hours
@@ -70,6 +86,11 @@ SlotSelect=@OnSlotSelect SlotRender=@OnSlotRender>
         Appointment data = await DialogService.OpenAsync<AddAppointment>("Add Appointment",
                 new Dictionary<string, object> { { "Start", args.Start }, { "End", args.End },{"DoctorPESEL",doctor.Pesel} });
         await scheduler.Reload();
+    }
+    public void Dispose()
+    {   
+        // Unsubscribe from the OnAppointmentAdded event
+        appointmentService.OnAppointmentAdded -= Reload;
     }
     async Task changeDropDown(){
         await scheduler.Reload();

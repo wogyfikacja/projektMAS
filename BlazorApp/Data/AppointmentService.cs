@@ -13,6 +13,7 @@ namespace BlazorApp.Data
     public class AppointmentService : Controller
     {
         private  MasContext _context;
+        public event Action OnAppointmentAdded;
         public AppointmentService(MasContext context)
         {
             _context = context;
@@ -36,6 +37,7 @@ namespace BlazorApp.Data
              return _context.Appointments
                     .Include(a => a.ServiceIdServiceNavigation)
                     .Include(a => a.PersonPeselNavigation)
+                    .Include(a => a.ServiceIdServiceNavigation.Appointments)
                     .Where(app=>app.ServiceIdServiceNavigation.DoctorPesel == doctor.Pesel);
         }
         /// <summary>
@@ -46,7 +48,9 @@ namespace BlazorApp.Data
         {
             return _context.People
                     .Include(p => p.Appointments)
-                    .Where(doc => doc.DoctorSpec!="NONE");
+                    .Include(p => p.Services)
+                    .ThenInclude(s => s.Appointments) // Include the Appointments property of each Service object
+                    .Where(doc => doc.DoctorSpec != "NONE");
         }
         /// <summary>
         /// Returns a list of all doctors surnames
@@ -66,6 +70,8 @@ namespace BlazorApp.Data
         public void addToContext(object entity){
             _context.Add(entity);
             _context.SaveChanges();
+
+            OnAppointmentAdded?.Invoke();
         }
         /// <summary>
         /// get list of all clients in a db
@@ -84,7 +90,11 @@ namespace BlazorApp.Data
             return _context.Services;
         }
         public IQueryable<Service> GetServicesByDocPESEL(string pesel){
-            return this.GetServices().Where(service=>service.DoctorPesel == pesel);
+            return this.GetServices()
+                                    .Include(service=>service.Appointments)
+                                    .Include(service=>service.Appointments)
+                                    .ThenInclude(appointment=>appointment.PersonPeselNavigation)     
+                                    .Where(service=>service.DoctorPesel == pesel);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

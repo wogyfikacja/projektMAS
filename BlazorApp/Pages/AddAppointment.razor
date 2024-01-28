@@ -56,6 +56,8 @@
     public string Pesel { get; set; }
     [Parameter]
     public int IdService { get; set; }
+    [Parameter]
+    public EventCallback OnDialogClose { get; set; }
     Appointment data = new Appointment();
 
     List<Service> serviceList;
@@ -93,7 +95,19 @@
         AppointmentService appointmentService = new AppointmentService(new MasContext());
         await base.OnInitializedAsync();
         serviceList = appointmentService.GetServicesByDocPESEL(DoctorPESEL).ToList();
-        peopleList = appointmentService.GetClients().ToList();
+        var appointments = new List<Appointment>();
+        peopleList = new List<Person>();
+        //for each service get list of appointments and then get list of people from those appointments. Dont use appointmentService for this
+        foreach (var service in serviceList)
+        {
+            appointments.AddRange(service.Appointments);
+        }
+        foreach (var appointment in appointments)
+        {
+            peopleList.Add(appointment.PersonPeselNavigation);
+        }
+        var temp = peopleList.ToHashSet<Person>();
+        peopleList = temp.ToList();
         placeholderService = serviceList.First();
         placeholderPerson = peopleList.First();
     }
